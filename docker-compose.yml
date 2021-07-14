@@ -1,13 +1,13 @@
 version: "3.7"
 services:
   app:
-    image: notdeviantart
+    image: blog
     depends_on:
     - mysql
     ports:
     - 80:5000
     networks:
-    - notdeviantart
+    - blog
     working_dir: /app
     volumes:
     - ./:/app
@@ -20,13 +20,13 @@ services:
     ports:
     - '3306:3306'
     networks:
-    - notdeviantart
+    - blog
     environment:
-      MYSQL_ROOT_PASSWORD: SuperSecretPassword
-      MYSQL_DATABASE: notdeviantart
+      MYSQL_ROOT_PASSWORD: crosby87
+      MYSQL_DATABASE: blog
 
 volumes:
   mysql_data:
 
 networks:
-  notdeviantart: {}
+  blog: {}
