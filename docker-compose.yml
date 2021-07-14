@@ -1,0 +1,32 @@
+version: "3.7"
+services:
+  app:
+    image: notdeviantart
+    depends_on:
+    - mysql
+    ports:
+    - 80:5000
+    networks:
+    - notdeviantart
+    working_dir: /app
+    volumes:
+    - ./:/app
+    environment:
+      FLASK_DEBUG: 1
+  mysql:
+    image: mysql:5.7
+    volumes:
+    - mysql_data:/var/lib/mysql
+    ports:
+    - '3306:3306'
+    networks:
+    - notdeviantart
+    environment:
+      MYSQL_ROOT_PASSWORD: SuperSecretPassword
+      MYSQL_DATABASE: notdeviantart
+
+volumes:
+  mysql_data:
+
+networks:
+  notdeviantart: {}
