@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<h2>Create an Account</h2>
+<h3>Username, password, or email must not contain spaces.</h3>
+<h3>Password must be 8 characters long and contain one letter, number, and special character.</h3>
+<form method="post" id="register" class="w-50">
+    <label for="email" class="form-label">Email: </label>
+    <input type="email" name="email" class="form-control" placeholder="you@example.org" />
+    <br />
+
+    <label for="name" class="form-label">Name: </label>
+    <input type="text" name="name" class="form-control" placeholder="Username" />
+    <br />
+
+    <label for="password" class="form-label">Password: </label>
+    <input type="password" name="password" class="form-control" />
+    <br />
+
+    <label for="confirm" class="form-label">Confirm: </label>
+    <input type="password" name="confirm" class="form-control" />
+    <br />
+
+    <button type="submit" class="btn btn-primary">Sign Up!</button>
+</form>
+{% endblock %}

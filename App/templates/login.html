@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="form-signin w-25 mx-auto">
+<h2>Login</h2>
+<form method="post" id="register">
+    <div class="form-floating">
+        <input type="text" name="nameoremail" class="form-control" placeholder="Username" />
+        <label for="nameoremail">Name or Email: </label>
+    </div>
+
+    <div class="form-floating">
+        <input type="password" name="password" class="form-control" placeholder="Password" />
+        <label for="password">Password: </label>
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-primary w-100">Login!</button>
+</form>
+</div>
+{% endblock %}
