@@ -93,7 +93,7 @@ def register():
         flash('Invalid username must not contain space.')
         return redirect('/register')
 
-    if name == None:
+    if len(name) == 0:
         flash('Invalid must input username')
         return redirect('/register')
 
