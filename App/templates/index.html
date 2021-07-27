@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row">
+
+    <div class="col-md-9">
+    
+        {% if query %}<h3>Search Results for <em>{{ query }}</em></h3>{% endif%}
+        <br />
+        {% if user_search %}
+        <div class="card ms-4 me-4">
+            <div class="card-header">Users</div>
+            <div class="card-body">
+            {% for user in user_search %}
+                <a href="http://localhost/profile/{{ user.name|lower }}">{{ user.name }}</a>{% if not loop.last %}, {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+        <br />
+        {% endif%}
+        <div class="container">
+            <div class="row row-cols-2 g-3">
+                {% for image in feed %}
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <a href="/image/{{ image.user.name|lower }}/{{ image.id }}"><img class="card-img-top recentimg" role="img" src="/static/uploads/{{ image.id }}.{{ image.extension }}" /></a>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted"><b><a class="text-reset text-decoration-none" href="/profile/{{ image.user.name|lower }}">{{ image.user.name }}</a></b> | {{ image.created.strftime('%Y-%m-%d') }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <form class="block fixed mt-5" action="/search">
+            <input type="search" name="s" class="form-control" placeholder="Search users and posts..." />
+        </form>
+    </div>
+
+</div>
+{% endblock %}
