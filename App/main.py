@@ -27,9 +27,7 @@ def home():
 @login_required
 def search():
     query = request.args.get('s')
-    return render_template('index.html',
-        feed_type='search', feed=get_image_search_results(query), 
-        user=current_user, query=query, user_search=get_user_search_results(query))
+    return render_template('index.html',user=current_user, query=query, user_search=get_user_search_results(query))
 
 
 

@@ -16,39 +16,35 @@ def testPassword(Password):  # returns false if password invalid true if valid
 
     length = len(Password)  # length of password
     if length >= 8:
-        p = re.compile('[@_!#$%^&*()<>?/|}{~:]')
+        for x in range(0, length):
+            current = Password[x]
+            p = re.compile('[@_!#$%^&*()<>?/|}{~:]')
 
-        if p.search(Password) != None or '[' in Password or ']' in Password:
-            is_special = True
+            if p.search(current) != None or '[' in Password or ']' in Password:
+                is_special = True
 
-        p = re.compile('([A-Za-z])')
+            p = re.compile('([A-Za-z])')
 
-        if p.search(Password) != None:
-            is_letter = True
+            if p.search(current) != None:
+                is_letter = True
 
-        p = re.compile('([0-9])')
+            p = re.compile('([0-9])')
 
-        if p.search(Password) != None:
-            is_number = True
+            if p.search(current) != None:
+                is_number = True
 
     return is_letter and is_special and is_number
 
 
-def validEmail(email):
-    valid = False
-    p = re.compile(['@'])
-    if p.search(email) != None:
-        valid = True
-
-    return valid
 
 
 def hasSpace(check):
-    no_space = False
-    p = re.compile([' '])
-    if p.search(check) == None:
-        no_space = True
-    return no_space
+    space = False
+    for x in range(0 , len(check)):
+        if check[x] == ' ':
+            space = True
+
+    return space
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -93,11 +89,11 @@ def register():
         flash('A user already exists with that name.')
         return redirect('/register')
 
-    if not (hasSpace(name)):
+    if hasSpace(name):
         flash('Invalid username must not contain space.')
         return redirect('/register')
 
-    if user == '':
+    if name == None:
         flash('Invalid must input username')
         return redirect('/register')
 
@@ -106,22 +102,16 @@ def register():
         flash('A user already exists with that email.')
         return redirect('/register')
 
-    if not (hasSpace(email)):
+    if hasSpace(email):
         flash('Invalid email must not contain space.')
         return redirect('/register')
 
-    if not (validEmail(email)):
-        flash('Invalid email')
-
-    if email == '':
-        flash('Invalid must input email')
-        return redirect('/register')
 
     if not (testPassword(password)):
         flash('Invalid password must be 8 characters long with a letter, number, and special character.')
         return redirect('/register')
 
-    if not (hasSpace(password)):
+    if hasSpace(password):
         flash('Invalid password must not contain space.')
         return redirect('/register')
 
