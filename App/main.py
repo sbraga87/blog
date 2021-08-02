@@ -27,14 +27,12 @@ def home():
 @login_required
 def search():
     query = request.args.get('s')
-    return render_template('index.html',user=current_user, query=query, user_search=get_user_search_results(query))
+    return render_template('index.html', user=current_user, query=query, user_search=get_user_search_results(query))
 
 
-
-
-def get_user_search_results(query):
+def get_user_search_results(query):  # Function that searches for users
     q = f"%{query}%"
-    return db.session.query(models.User)\
-                     .filter(models.User.name.like(q))\
-                     .limit(5)\
-                     .all()
+    return db.session.query(models.User) \
+        .filter(models.User.name.like(q)) \
+        .limit(5) \
+        .all()

@@ -9,7 +9,7 @@ import re
 auth = Blueprint('auth', __name__)
 
 
-def testPassword(Password):  # returns false if password invalid true if valid
+def testPassword(Password):  # Checks if password meets requirements returns false if password invalid true if valid.
     is_special = False  # if special characters is present
     is_letter = False  # if letter is present
     is_number = False  # if number is present
@@ -36,11 +36,10 @@ def testPassword(Password):  # returns false if password invalid true if valid
     return is_letter and is_special and is_number
 
 
-
-
 def hasSpace(check):
-    space = False
-    for x in range(0 , len(check)):
+    # Checks for space in input
+    space = False  # If space is present
+    for x in range(0, len(check)):
         if check[x] == ' ':
             space = True
 
@@ -48,7 +47,7 @@ def hasSpace(check):
 
 
 @auth.route('/login', methods=['GET', 'POST'])
-def login():
+def login():  # Function for login
     if request.method == 'GET':
         return render_template('login.html')
 
@@ -56,22 +55,23 @@ def login():
     password = request.form.get('password')
     user = models.User.query.filter((models.User.name == nameoremail) | (models.User.email == nameoremail)).first()
 
+    # Checks if username/email and password are correct.
     if user and check_password_hash(user.password, password):
         login_user(user)
         return redirect('/')
     else:
         flash('Incorrect username or password.')
-        return redirect('/login');
+        return redirect('/login')
 
 
 @auth.route('/logout')
-def logout():
+def logout():  # Function for logout
     logout_user()
     return redirect('/')
 
 
 @auth.route('/register', methods=['GET', 'POST'])
-def register():
+def register():  # Function for creating account
     if request.method == 'GET':
         return render_template('register.html')
 
@@ -80,9 +80,10 @@ def register():
     password = request.form.get('password')
     confirm = request.form.get('confirm')
 
+    # Checks that inputted email, username, and password are valid
     if password != confirm:
-        flash('Passwords must match.');
-        return redirect('/register');
+        flash('Passwords must match.')
+        return redirect('/register')
 
     existing_user = models.User.query.filter_by(name=name).first()
     if existing_user:
@@ -106,7 +107,6 @@ def register():
         flash('Invalid email must not contain space.')
         return redirect('/register')
 
-
     if not (testPassword(password)):
         flash('Invalid password must be 8 characters long with a letter, number, and special character.')
         return redirect('/register')
@@ -115,6 +115,7 @@ def register():
         flash('Invalid password must not contain space.')
         return redirect('/register')
 
+    # Stores email, username, and password in database
     hashed_password = generate_password_hash(password, method='pbkdf2:sha512')
     user = models.User(
         name=name,
